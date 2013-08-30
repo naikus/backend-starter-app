@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Example usage
+# sh add-user anaik password naikus@gmail.com Aniket Naik
+
+curl -v -X POST -u superuser:password \
+    -H "Content-Type: application/json" \
+    -d '{
+            "user": {
+                "username": "'$1'",
+                "password": "'$2'",
+                "email": "'$3'",
+                "firstName": "'$4'",
+                "lastName": "'$5'",
+                "role": {
+                    "name": "appuser"
+                }
+            }
+        }' \
+    http://localhost:8080/api/users

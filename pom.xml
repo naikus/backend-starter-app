@@ -1,0 +1,291 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.restapp</groupId>
+    <artifactId>rest-starter</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>REST Starter App</name>
+    <description>
+       A starter app with dependency injection (javax.inject), jax-rs, jdo and shiro security authication and authorization
+    </description>
+    
+    <properties>
+        <javax.inject.version>1</javax.inject.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <jdo-api.version>3.0.1</jdo-api.version>
+        
+        <jaxrs-api.version>3.0.2.Final</jaxrs-api.version>
+        <resteasy.version>3.0.2.Final</resteasy.version>   
+        
+        <slf4j.version>1.7.2</slf4j.version>     
+        <shiro.version>1.2.2</shiro.version>
+        
+        <spring.version>3.2.3.RELEASE</spring.version>
+        
+        <bval-jsr303.version>0.5</bval-jsr303.version>
+        
+        <hsqldb.version>2.3.0</hsqldb.version>
+        <datanucleus-core.version>3.2.6</datanucleus-core.version>
+        <datanucleus-api-jdo.version>3.2.4</datanucleus-api-jdo.version>
+        <datanucleus-rdbms.version>3.2.5</datanucleus-rdbms.version>
+                
+        <jdring.version>2.0</jdring.version>
+        <base64.version>2.3.8</base64.version>
+        
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <build>
+        <finalName>rest-starter</finalName>
+        
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-maven-plugin</artifactId>
+                    <version>3.3.0-release</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>copy</goal></goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-runner</artifactId>
+                                    <version>9.0.0.M4</version>
+                                    <destFileName>jetty-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>datanucleus-maven-plugin</artifactId>
+                <configuration>
+                    <mappingIncludes>**/model/*.class</mappingIncludes>
+                    <verbose>true</verbose>
+                    <enhancerName>ASM</enhancerName>
+                    <api>JDO</api>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <repositories>
+        <repository>
+            <id>project-local</id>
+            <name>project-repo</name>
+            <url>file://${project.basedir}/local-repo</url>
+        </repository>
+    </repositories>
+        
+    <dependencies>
+       <dependency>
+          <groupId>javax.inject</groupId>
+          <artifactId>javax.inject</artifactId>
+          <version>${javax.inject.version}</version>
+       </dependency>
+       
+       <dependency>
+           <groupId>javax.validation</groupId>
+           <artifactId>validation-api</artifactId>
+           <version>${validation-api.version}</version>
+       </dependency>
+       
+       <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>${javax.servlet-api.version}</version>
+          <scope>provided</scope>
+       </dependency>
+
+       
+       <dependency>
+           <groupId>org.jboss.resteasy</groupId>
+           <artifactId>jaxrs-api</artifactId>
+           <version>${jaxrs-api.version}</version>
+       </dependency>
+       
+       <dependency>
+           <groupId>javax.jdo</groupId>
+           <artifactId>jdo-api</artifactId>
+           <version>${jdo-api.version}</version>
+       </dependency>
+       
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-simple</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       
+       
+       <!-- Apache Shiro security integration -->
+       <dependency>
+           <groupId>org.apache.shiro</groupId>
+           <artifactId>shiro-web</artifactId>
+           <version>${shiro.version}</version>
+          <exclusions>
+             <exclusion>
+                <artifactId>slf4j-api</artifactId>
+                <groupId>org.slf4j</groupId>
+             </exclusion>
+          </exclusions>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.shiro</groupId>
+           <artifactId>shiro-spring</artifactId>
+           <version>${shiro.version}</version>
+           <scope>runtime</scope>
+       </dependency>
+
+
+
+
+        <!-- JAX-RS Implementation RESTEasy dependencies -->
+        <dependency>
+           <groupId>org.jboss.resteasy</groupId>
+           <artifactId>resteasy-jaxrs</artifactId>
+           <version>${resteasy.version}</version>
+           <scope>runtime</scope>
+           <exclusions>
+               <exclusion>
+                   <artifactId>javassist</artifactId>
+                   <groupId>javassist</groupId>
+               </exclusion>
+               <exclusion>
+                   <artifactId>jaxrs-api</artifactId>
+                   <groupId>org.jboss.resteasy</groupId>
+               </exclusion>
+              <exclusion>
+                 <artifactId>slf4j-simple</artifactId>
+                 <groupId>org.slf4j</groupId>
+              </exclusion>
+           </exclusions>
+        </dependency>
+        
+
+
+
+        <!-- DI Container dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+           <groupId>org.jboss.resteasy</groupId>
+           <artifactId>resteasy-spring</artifactId>
+           <version>${resteasy.version}</version>
+           <scope>runtime</scope>
+           <exclusions>
+               <exclusion>
+                   <artifactId>jaxrs-api</artifactId>
+                   <groupId>org.jboss.resteasy</groupId>
+               </exclusion>
+           </exclusions>
+        </dependency>
+
+
+        <!-- DB and persistence dependencies -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-core</artifactId>
+            <version>${datanucleus-core.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jdo</artifactId>
+            <version>${datanucleus-api-jdo.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-rdbms</artifactId>
+            <version>${datanucleus-rdbms.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        
+        <!-- Bean validation implementation -->
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-jsr303</artifactId>
+            <version>${bval-jsr303.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+
+        <!-- Other application dependencies -->
+        <dependency>
+            <groupId>net.iharder</groupId>
+            <artifactId>base64</artifactId>
+            <version>${base64.version}</version>
+        </dependency>
+
+
+
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

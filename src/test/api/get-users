@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Example usage
+# sh get-users
+
+curl -v -X GET -u superuser:password  http://localhost:8080/api/users
