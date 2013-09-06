@@ -16,7 +16,6 @@
         <!-- Bean validation for model classes for pre-persist -->
         <property name="datanucleus.validation.mode" value="auto" />
         
-        <property name="datanucleus.DetachAllOnCommit" value="true" />
         <property name="datanucleus.autoCreateSchema" value="true" />
         <property name="datanucleus.validateTables" value="true" />
         <property name="datanucleus.validateConstraints" value="true" />

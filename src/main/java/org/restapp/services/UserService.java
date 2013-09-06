@@ -1,14 +1,12 @@
 package org.restapp.services;
 
-import org.restapp.model.user.User;
-import org.restapp.model.user.UserRole;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Set;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import org.restapp.model.user.User;
+import org.restapp.model.user.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

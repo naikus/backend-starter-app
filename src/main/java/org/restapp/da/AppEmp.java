@@ -16,6 +16,7 @@ public class AppEmp extends EMP {
     
     public AppEmp() {
         pmf = JDOHelper.getPersistenceManagerFactory("restapp-model");
+        pmf.setDetachAllOnCommit(true);
     };
     
     @Override
