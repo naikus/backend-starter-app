@@ -64,11 +64,11 @@ public class PersistenceService {
     public <T extends Persistable> T findById(Class<T> clazz, Object id, String... fields) {
         log.info("Finding entity {} with id {}, including fields {}", clazz, id, fields);
         PersistenceManager pm = pmf.getPersistenceManager();
-        FetchGroup grp = pm.getFetchGroup(clazz, "ExtraFields");
+        FetchGroup grp = pm.getFetchGroup(clazz, "Subset");
         for(String field: fields) {
             grp.addMember(field);
         }
-        pm.getFetchPlan().addGroup("ExtraFields");
+        pm.getFetchPlan().addGroup("Subset");
         try {
             T t = pm.getObjectById(clazz, id);
             if(JDOHelper.isDeleted(t)) {
@@ -109,7 +109,7 @@ public class PersistenceService {
             List<T> ts = (List<T>) q.execute();
             return (List<T>) pm.detachCopyAll(ts);
         }catch(JDOException e) {
-            log.error("Error executing named query", e);
+            log.error("Error executing findAll query", e);
             throw new ServiceException("A data access error occured");
         }finally {
             pm.close();
@@ -128,21 +128,26 @@ public class PersistenceService {
      * @return the newly created entity
      */
     public <T extends Persistable> T save(T entity) {
-        log.debug("Creating a new entity {}",  entity);
-        PersistenceManager pm = pm();
+        log.info("Creating a new entity {}",  entity);
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
-        boolean alreadyInTx = tx.isActive();
-        
+        // boolean alreadyInTx = tx.isActive();
         try {
-            if(!alreadyInTx) {begin();}
+            // if(!alreadyInTx) {begin();}
+            tx.begin();
             pm.makePersistent(entity);
-            if(!alreadyInTx) {commit();}
+            // if(!alreadyInTx) {commit();}
+            tx.commit();
             return entity;
         }catch(JDOException e) {
             log.error("Error saving entity", e);
             throw new ServiceException("A data access error occured");
         }finally {
-            if(!alreadyInTx) {done();}
+            // if(!alreadyInTx) {done();}
+            if(tx.isActive()) {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
     
@@ -190,6 +195,7 @@ public class PersistenceService {
             
             log.debug("Executing named query '{}' {} with params {}", queryName, q.toString(), params);
             T result = (T) q.executeWithArray(params);
+            pm.detachCopy(result);
             q.closeAll();
             tx.commit();
             return result;
