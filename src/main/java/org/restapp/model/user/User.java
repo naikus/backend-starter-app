@@ -1,6 +1,5 @@
 package org.restapp.model.user;
 
-
 import org.restapp.model.Persistable;
 import javax.jdo.annotations.Index;
 import javax.jdo.annotations.Join;
@@ -16,90 +15,87 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @PersistenceCapable(detachable = "true", cacheable = "true")
 @Queries({
-    @Query(name = "User.findByUsername", 
-            value = "select from org.restapp.model.user.User where username == :username")
+  @Query(name = "User.findByEmail",
+      value = "select from org.restapp.model.user.User where email == :email")
 })
-@Index(members = {"username"})
 public class User extends Persistable {
+  @Persistent(nullValue = NullValue.EXCEPTION)
+  @NotNull(message = "user.password.notnull")
+  private String password;
 
-    @Persistent(nullValue = NullValue.EXCEPTION)
-    @Unique
-    @NotNull(message = "user.username")
-    private String username;
-    
-    @Persistent(nullValue = NullValue.EXCEPTION)
-    @NotNull(message = "user.password")
-    private String password;
-    
-    private String firstName;
-    private String lastName;
-    
-    @NotNull(message = "user.email")
-    private String email;
-    
-    @Persistent(defaultFetchGroup = "true")
-    @Join
-    private UserRole role;
+  private String firstName;
+  private String lastName;
 
-    
-    public User() {}
-    
-    public User(String username, String password, UserRole role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+  @NotNull(message = "user.email.notnull")
+  @Unique
+  @Index(name = "email")
+  private String email;
 
-    public String getUsername() {
-        return username;
-    }
+  @Persistent(defaultFetchGroup = "true")
+  @Join
+  private UserRole role;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public User() {
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public User(String email, String password, UserRole role) {
+    this.email = email;
+    this.password = password;
+    this.role = role;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    
-    public String getEmail() {
-        return email;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public UserRole getRole() {
-        return role;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public UserRole getRole() {
+    return role;
+  }
+
+  public void setRole(UserRole role) {
+    this.role = role;
+  }
+
+  public String getFullName() {
+    String fName = getFirstName(), lName = getLastName();
+    if(fName == null && lName == null) {
+      return getEmail();
     }
-    
-    @Override
-    public String toString() {
-        return getId() + ":" + getUsername() + ":" + getPassword();
-    }
+    return fName != null ? fName + (lName != null ? ", " + lName : "") : lName;
+  }
+
+  @Override
+  public String toString() {
+    return new StringBuilder("User(")
+        .append("fullName=").append(this.getFullName())
+        .append(", email=").append(this.getEmail()).append(")").toString();
+  }
 }

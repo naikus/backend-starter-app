@@ -9,49 +9,47 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Inheritance(customStrategy = "complete-table")
 public abstract class Persistable implements Serializable {
+  @PrimaryKey
+  @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+  private long id;
 
-    @PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private long id;
-    
-    @Persistent
-    private Date createdOn;
-    
-    @Persistent
-    private Date modifiedOn;
-    
-    @Persistent
-    private String modifiedBy;
+  @Persistent
+  private Date createdOn;
 
-    public long getId() {
-        return id;
-    }
+  @Persistent
+  private Date modifiedOn;
 
-    public Date getCreatedOn() {
-        return createdOn;
-    }
+  @Persistent
+  private String modifiedBy;
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public Date getModifiedOn() {
-        return modifiedOn;
-    }
+  public Date getCreatedOn() {
+    return createdOn;
+  }
 
-    public void setModifiedOn(Date modifiedOn) {
-        this.modifiedOn = modifiedOn;
-    }
+  public void setCreatedOn(Date createdOn) {
+    this.createdOn = createdOn;
+  }
 
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
+  public Date getModifiedOn() {
+    return modifiedOn;
+  }
 
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
+  public void setModifiedOn(Date modifiedOn) {
+    this.modifiedOn = modifiedOn;
+  }
+
+  public String getModifiedBy() {
+    return modifiedBy;
+  }
+
+  public void setModifiedBy(String modifiedBy) {
+    this.modifiedBy = modifiedBy;
+  }
 }

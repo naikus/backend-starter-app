@@ -10,20 +10,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A base class for all rest resources.
- * 
+ *
  * @author aniket
  */
 public abstract class BaseResource {
-    private static Logger log = LoggerFactory.getLogger(BaseResource.class.getSimpleName());
-    
-    @Context
-    protected SecurityContext securityContext;
-    
-    @Inject 
-    protected UserService userService;
-    
-    protected User currentUser() {
-        long userId = Long.valueOf(securityContext.getUserPrincipal().getName());
-        return userService.getUser(userId);
-    }
+  private static Logger LOG = LoggerFactory.getLogger(BaseResource.class.getSimpleName());
+
+  @Context
+  protected SecurityContext securityContext;
+
+  @Inject
+  protected UserService userService;
+
+  protected User currentUser() {
+    long userId = Long.valueOf(securityContext.getUserPrincipal().getName());
+    return userService.getUser(userId);
+  }
 }
