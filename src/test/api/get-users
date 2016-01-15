@@ -3,4 +3,8 @@
 # Example usage
 # sh get-users
 
-curl -v -X GET -u superuser:password  http://localhost:8080/api/users
+TOKEN=`curl -v -X POST \
+    -d 'username=superuser@example.com&password=password' \
+    http://localhost:8080/api/authentication`
+
+curl -v -X GET -H "Authorization: Bearer $TOKEN"  http://localhost:8080/api/users

@@ -1,6 +1,7 @@
 package org.restapp.web.security;
 
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -27,8 +28,12 @@ import org.slf4j.LoggerFactory;
 public class AuthResource extends BaseResource {
 	private static final Logger LOG = LoggerFactory.getLogger(AuthResource.class.getSimpleName());
 	
-	@Inject
-	 AuthenticationService authService;
+	AuthenticationService authService;
+
+  @Inject
+  public AuthResource(AuthenticationService authService) {
+    this.authService = authService;
+  }
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Example usage
+# sh authenticate anaik@gmail.com password 
+
+curl -v -X POST \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+          "username": "'$1'",
+          "password": "'$2'"
+        }' \
+     http://localhost:8080/api/authentication
+
+

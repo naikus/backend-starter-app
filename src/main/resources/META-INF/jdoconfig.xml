@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jdoconfig xmlns="http://java.sun.com/xml/ns/jdo/jdoconfig"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdoconfig
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdoconfig
         http://java.sun.com/xml/ns/jdo/jdoconfig_3_0.xsd">
 
-    <persistence-manager-factory name="restapp-model">
-        <property name="javax.jdo.option.ConnectionDriverName" value="org.hsqldb.jdbcDriver" />
-        <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:file:/tmp/rest-starter/data;shutdown=true" />
-        <!-- property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:reststarter" / -->
+  <persistence-manager-factory name="restapp-model">
+    <property name="javax.jdo.option.ConnectionDriverName" value="org.hsqldb.jdbcDriver" />
+    <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:file:/tmp/rest-starter/data;shutdown=true" />
+    <!-- property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:reststarter" / -->
         
-        <property name="javax.jdo.option.ConnectionUserName" value="sa" />
-        <property name="javax.jdo.option.ConnectionPassword" value="" />
+    <property name="javax.jdo.option.ConnectionUserName" value="sa" />
+    <property name="javax.jdo.option.ConnectionPassword" value="" />
         
-        <!-- datanucleus ignores this?? -->
-        <proprety name="javax.jdo.option.DetachAllOnCommit" value="true" />
-        <property name="datanucleus.DetachAllOnCommit" value="true" />
+    <!-- datanucleus ignores this?? -->
+    <proprety name="javax.jdo.option.DetachAllOnCommit" value="true" />
+    <property name="datanucleus.DetachAllOnCommit" value="true" />
         
         
-        <!-- Bean validation for model classes for pre-persist -->
-        <property name="datanucleus.validation.mode" value="auto" />
+    <!-- Bean validation for model classes for pre-persist -->
+    <property name="datanucleus.validation.mode" value="auto" />
         
-        <property name="datanucleus.autoCreateSchema" value="true" />
-        <property name="datanucleus.validateTables" value="true" />
-        <property name="datanucleus.validateConstraints" value="true" />
-        <property name="datanucleus.NontransactionalRead" value="true" />
-    </persistence-manager-factory>
+    <property name="datanucleus.autoCreateSchema" value="true" />
+    <property name="datanucleus.validateTables" value="true" />
+    <property name="datanucleus.validateConstraints" value="true" />
+    <property name="datanucleus.NontransactionalRead" value="true" />
+  </persistence-manager-factory>
 </jdoconfig>

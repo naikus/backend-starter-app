@@ -1,20 +1,22 @@
 #!/bin/sh
 
 # Example usage
-# sh add-user anaik password naikus@gmail.com Aniket Naik
+# sh add-user naikus@gmail.com password Aniket Naik
 
-curl -v -X POST -u superuser:password \
+TOKEN=`curl -v -X POST \
+    -d 'username=superuser@example.com&password=password' \
+    http://localhost:8080/api/authentication`
+
+curl -v -X POST \
+    -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
     -d '{
-            "user": {
-                "username": "'$1'",
-                "password": "'$2'",
-                "email": "'$3'",
-                "firstName": "'$4'",
-                "lastName": "'$5'",
-                "role": {
-                    "name": "appuser"
-                }
+            "email": "'$1'",
+            "password": "'$2'",
+            "firstName": "'$3'",
+            "lastName": "'$4'",
+            "role": {
+                "name": "appuser"
             }
         }' \
     http://localhost:8080/api/users

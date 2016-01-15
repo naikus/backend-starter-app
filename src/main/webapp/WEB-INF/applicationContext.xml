@@ -10,30 +10,29 @@
         http://www.springframework.org/schema/util/spring-util.xsd
 
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd"> 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+  
   <context:annotation-config/>
- 
   <context:component-scan base-package="org.restapp" />
     
   <bean id="authSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
     <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
     <!-- Custom Realm defined in org.restapp.web.security.shiro package -->
-	 
-	 <property name="realms">
-		 <list>
-			 <ref bean="JDOUsernamePasswordRealm" />
-		 </list>
-	 </property>
+    <property name="realms">
+      <list>
+        <ref bean="JDOUsernamePasswordRealm" />
+      </list>
+    </property>
   </bean>
   
   <bean id="apiSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
     <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
     <!-- Custom Realm defined in org.restapp.web.security.shiro package -->
-	  <property name="realms">
-		  <list>
-		 	  <ref bean="JDOJwtRealm" />
-		  </list>
-	  </property>
+    <property name="realms">
+      <list>
+        <ref bean="JDOJwtRealm" />
+      </list>
+    </property>
   </bean>
   
   <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
@@ -60,7 +59,7 @@
     <property name="filters">
       <util:map>
         <entry key="appRole" value-ref="RoleAuthzFilter" />
-		    <entry key="authcToken" value-ref="JWTTokenAuthcFilter" />
+        <entry key="authcToken" value-ref="JWTTokenAuthcFilter" />
       </util:map>
     </property>
     <property name="filterChainDefinitions">
@@ -69,5 +68,4 @@
       </value>
     </property>
   </bean>
-    
 </beans>

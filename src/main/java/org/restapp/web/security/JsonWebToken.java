@@ -9,7 +9,6 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.ReadOnlyJWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import java.text.ParseException;
 import java.util.Date;
@@ -23,14 +22,14 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonWebToken {
 	private static final Logger LOG = LoggerFactory.getLogger(JsonWebToken.class.getSimpleName());
-	public static final String DEFAULT_ISSUER = "http://www.restapp.com";
-	public static final String DEFAULT_AUDIENCE = "http://www.restapp.com/api";
+	public static final String DEFAULT_ISSUER = "http://www.rest-starter.org";
+	public static final String DEFAULT_AUDIENCE = "http://www.rest-starter.org/api";
 	
 	private String rawToken;
 	
 	private SignedJWT jwt;
 	private JWSHeader header;
-	private ReadOnlyJWTClaimsSet claims;
+	private JWTClaimsSet claims;
 	
 	public JsonWebToken(String token) throws RuntimeException {
 		this.rawToken = token;
@@ -66,7 +65,7 @@ public class JsonWebToken {
 	}
 	
 	public String getType() {
-		return claims.getType();
+		return (String) claims.getClaim("typ");
 	}
 	
 	public String getAlgorithm() {
@@ -86,8 +85,8 @@ public class JsonWebToken {
 	}
 	
 	public boolean verify(String secret) {
-		JWSVerifier verifier = new MACVerifier(secret);
 		try {
+      JWSVerifier verifier = new MACVerifier(secret);
 			return jwt.verify(verifier);
 		}catch(JOSEException je) {
 			throw new RuntimeException("Could not verify token", je);
@@ -114,13 +113,13 @@ public class JsonWebToken {
 		
 		private String jti;
 		private String typ;
-		private SigningAlgorithm alg = SigningAlgorithm.HS512;
+		private SigningAlgorithm alg = SigningAlgorithm.HS256;
 		private String iss;
 		private String sub;
 		private String aud;
 		private Date iat;
 		private Date exp;
-		private Map<String, Object> claims = new HashMap<>();
+		private final Map<String, Object> claims = new HashMap<>();
 		
 		public Builder() {
 			 type("JWT");
@@ -174,18 +173,19 @@ public class JsonWebToken {
 		
 		private SignedJWT build() {
 			JWSHeader header = new JWSHeader.Builder(
-					new JWSAlgorithm(this.alg.name())).type(JOSEObjectType.JWS).build();
-			JWTClaimsSet claimSet = new JWTClaimsSet();
-			claimSet.setIssuer(iss);
-			claimSet.setJWTID(jti);
-			claimSet.setIssuer(iss);
-			claimSet.setSubject(sub);
-			claimSet.setAudience(aud);
-			claimSet.setIssueTime(iat);
-			claimSet.setExpirationTime(exp);
-			claimSet.setType(typ);
-			claimSet.setAllClaims(claims);
-			
+					new JWSAlgorithm(this.alg.name())).type(JOSEObjectType.JWT).build();
+			JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder()
+          .issuer(iss)
+          .jwtID(jti)
+          .subject(sub)
+          .audience(aud)
+          .issueTime(iat)
+          .expirationTime(exp);
+      
+      claims.forEach((k, v) -> {
+        claimSetBuilder.claim(k, v);
+      });
+      JWTClaimsSet claimSet = claimSetBuilder.build();			
 			SignedJWT jwt = new SignedJWT(header, claimSet);
 			return jwt;
 		}
@@ -196,9 +196,9 @@ public class JsonWebToken {
 		}
 		
 		public JsonWebToken sign(String secret) throws RuntimeException {
-			SignedJWT jwt = build();
-			JWSSigner macSigner = new MACSigner(secret);
 			try {
+        SignedJWT jwt = build();
+        JWSSigner macSigner = new MACSigner(secret);
 				jwt.sign(macSigner);
 				return new JsonWebToken(jwt);
 			}catch(JOSEException e) {
