@@ -1,4 +1,4 @@
-package org.restapp.services;
+package org.restapp.persistence;
 
 import java.util.List;
 import javax.jdo.FetchGroup;
@@ -9,10 +9,10 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import org.restapp.da.PMFProvider;
-import org.restapp.model.Persistable;
+import org.restapp.persistence.Persistable;
 import java.util.concurrent.Callable;
 import javax.jdo.FetchPlan;
+import org.restapp.services.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

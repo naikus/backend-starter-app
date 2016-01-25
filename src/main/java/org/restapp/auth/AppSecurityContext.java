@@ -1,4 +1,4 @@
-package org.restapp.web.security;
+package org.restapp.auth;
 
 /**
  * A security context for service layer. This is used to obtain information about the current user

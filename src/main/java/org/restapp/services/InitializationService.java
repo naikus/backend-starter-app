@@ -1,5 +1,6 @@
 package org.restapp.services;
 
+import org.restapp.usermgmt.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
@@ -8,8 +9,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import org.restapp.config.ConfigProvider;
 import org.restapp.config.Configuration;
-import org.restapp.model.user.User;
-import org.restapp.model.user.UserRole;
+import org.restapp.usermgmt.User;
+import org.restapp.usermgmt.UserRole;
 
 /**
  * App specific initialization

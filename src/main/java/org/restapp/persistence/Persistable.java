@@ -1,4 +1,4 @@
-package org.restapp.model;
+package org.restapp.persistence;
 
 import java.io.Serializable;
 import java.util.Date;

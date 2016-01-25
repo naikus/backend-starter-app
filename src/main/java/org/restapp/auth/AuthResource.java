@@ -1,7 +1,6 @@
-package org.restapp.web.security;
+package org.restapp.auth;
 
 import java.util.UUID;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -14,7 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.restapp.api.ApiResponse;
 import org.restapp.api.BaseResource;
-import org.restapp.services.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

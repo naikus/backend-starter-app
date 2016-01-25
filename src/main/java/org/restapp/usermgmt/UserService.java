@@ -1,13 +1,16 @@
-package org.restapp.services;
+package org.restapp.usermgmt;
 
-import org.restapp.da.PMFProvider;
+import org.restapp.persistence.PMFProvider;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import org.restapp.model.user.User;
-import org.restapp.model.user.UserRole;
+import org.restapp.auth.PasswordEncoder;
+import org.restapp.persistence.PersistenceService;
+import org.restapp.services.ServiceException;
+import org.restapp.usermgmt.User;
+import org.restapp.usermgmt.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

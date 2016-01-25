@@ -1,4 +1,4 @@
-package org.restapp.web.security.shiro;
+package org.restapp.auth.shiro;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -10,7 +10,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.restapp.web.security.JsonWebToken;
+import org.restapp.auth.JsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

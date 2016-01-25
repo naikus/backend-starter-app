@@ -1,10 +1,10 @@
 package org.restapp.api;
 
-import org.restapp.services.UserService;
+import org.restapp.usermgmt.UserService;
 import javax.inject.Inject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
-import org.restapp.model.user.User;
+import org.restapp.usermgmt.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

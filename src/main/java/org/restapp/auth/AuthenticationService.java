@@ -1,9 +1,12 @@
-package org.restapp.services;
+package org.restapp.auth;
 
+import org.restapp.auth.PasswordEncoder;
+import org.restapp.usermgmt.UserService;
 import java.io.UnsupportedEncodingException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import org.restapp.services.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +29,7 @@ public class AuthenticationService {
 		if(username == null) {
 			return false;
 		}
-		  org.restapp.model.user.User user = userService.getUserByEmail(username);
+		  org.restapp.usermgmt.User user = userService.getUserByEmail(username);
 		if(user == null) {
 			return false;
 		}

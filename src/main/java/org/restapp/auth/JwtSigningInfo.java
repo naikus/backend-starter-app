@@ -1,4 +1,4 @@
-package org.restapp.web.security;
+package org.restapp.auth;
 
 import java.io.InputStream;
 import java.util.Properties;

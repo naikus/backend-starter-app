@@ -1,7 +1,7 @@
-package org.restapp.web.security.shiro;
+package org.restapp.auth.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
-import org.restapp.web.security.JsonWebToken;
+import org.restapp.auth.JsonWebToken;
 
 /**
  * A shiro authentication token for jwt

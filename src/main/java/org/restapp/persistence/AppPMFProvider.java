@@ -1,4 +1,4 @@
-package org.restapp.da;
+package org.restapp.persistence;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

@@ -1,4 +1,4 @@
-package org.restapp.services;
+package org.restapp.auth;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import net.iharder.Base64;
+import org.restapp.services.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

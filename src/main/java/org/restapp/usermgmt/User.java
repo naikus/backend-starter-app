@@ -1,6 +1,6 @@
-package org.restapp.model.user;
+package org.restapp.usermgmt;
 
-import org.restapp.model.Persistable;
+import org.restapp.persistence.Persistable;
 import javax.jdo.annotations.Index;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.NullValue;

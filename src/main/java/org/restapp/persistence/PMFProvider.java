@@ -1,4 +1,4 @@
-package org.restapp.da;
+package org.restapp.persistence;
 
 import javax.inject.Provider;
 import javax.jdo.PersistenceManagerFactory;

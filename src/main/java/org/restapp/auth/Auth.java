@@ -1,4 +1,4 @@
-package org.restapp.web.security;
+package org.restapp.auth;
 
 /**
  * A simple authentication object for obtaining authentication tokens

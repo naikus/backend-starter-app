@@ -1,4 +1,4 @@
-package org.restapp.web.security.shiro;
+package org.restapp.auth.shiro;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,11 +12,11 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.restapp.model.user.User;
-import org.restapp.model.user.UserRole;
-import org.restapp.services.UserService;
-import org.restapp.web.security.JsonWebToken;
-import org.restapp.web.security.JwtSigningInfo;
+import org.restapp.usermgmt.User;
+import org.restapp.usermgmt.UserRole;
+import org.restapp.usermgmt.UserService;
+import org.restapp.auth.JsonWebToken;
+import org.restapp.auth.JwtSigningInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

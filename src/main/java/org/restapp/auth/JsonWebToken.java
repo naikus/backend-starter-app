@@ -1,4 +1,4 @@
-package org.restapp.web.security;
+package org.restapp.auth;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JOSEObjectType;

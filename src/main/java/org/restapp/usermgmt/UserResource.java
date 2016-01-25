@@ -1,4 +1,4 @@
-package org.restapp.api;
+package org.restapp.usermgmt;
 
 import java.util.List;
 import javax.inject.Named;
@@ -12,7 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import org.restapp.model.user.User;
+import org.restapp.api.BaseResource;
+import org.restapp.usermgmt.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

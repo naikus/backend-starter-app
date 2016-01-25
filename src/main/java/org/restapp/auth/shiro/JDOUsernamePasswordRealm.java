@@ -1,4 +1,4 @@
-package org.restapp.web.security.shiro;
+package org.restapp.auth.shiro;
 
 import java.io.UnsupportedEncodingException;
 import javax.inject.Inject;
@@ -15,10 +15,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.restapp.model.user.User;
-import org.restapp.model.user.UserRole;
-import org.restapp.services.PasswordEncoder;
-import org.restapp.services.UserService;
+import org.restapp.usermgmt.User;
+import org.restapp.usermgmt.UserRole;
+import org.restapp.auth.PasswordEncoder;
+import org.restapp.usermgmt.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

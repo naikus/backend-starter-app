@@ -1,4 +1,4 @@
-package org.restapp.web.security.shiro;
+package org.restapp.auth.shiro;
 
 import java.util.Arrays;
 import javax.inject.Named;
