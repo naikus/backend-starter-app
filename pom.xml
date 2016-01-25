@@ -3,11 +3,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
         http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.restapp</groupId>
-  <artifactId>rest-starter</artifactId>
+  <groupId>org.starterapp</groupId>
+  <artifactId>backend-starter</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>REST Starter App</name>
+  <name>Starter App</name>
   <description>
     A starter app with dependency injection (javax.inject), jax-rs, jdo and 
     shiro security authication and authorization

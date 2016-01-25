@@ -4,10 +4,10 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdoconfig
         http://java.sun.com/xml/ns/jdo/jdoconfig_3_0.xsd">
 
-  <persistence-manager-factory name="restapp-model">
+  <persistence-manager-factory name="starterapp-model">
     <property name="javax.jdo.option.ConnectionDriverName" value="org.hsqldb.jdbcDriver" />
-    <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:file:/tmp/rest-starter/data;shutdown=true" />
-    <!-- property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:reststarter" / -->
+    <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:file:/tmp/starterapp/data;shutdown=true" />
+    <!-- property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:starterapp" / -->
         
     <property name="javax.jdo.option.ConnectionUserName" value="sa" />
     <property name="javax.jdo.option.ConnectionPassword" value="" />
