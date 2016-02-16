@@ -34,13 +34,13 @@ public class JDOUsernamePasswordRealm extends AuthorizingRealm {
 	private static final Logger LOG = LoggerFactory.getLogger
 		(JDOUsernamePasswordRealm.class.getSimpleName());
 
-	@Inject
 	private UserService userService;
-
-	@Inject
 	private PasswordEncoder passwordEncoder;
 
-	public JDOUsernamePasswordRealm() {
+  @Inject
+	public JDOUsernamePasswordRealm(UserService us, PasswordEncoder encoder) {
+    this.userService = us;
+    this.passwordEncoder = encoder;
 		this.setCredentialsMatcher(new CredentialsMatcher() {
 			@Override
 			public boolean doCredentialsMatch(AuthenticationToken at, AuthenticationInfo ai) {

@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
 public class JDOJwtRealm extends AuthorizingRealm {
 	private static final Logger LOG = LoggerFactory.getLogger(JDOJwtRealm.class.getSimpleName());
 	
-	@Inject
 	private UserService userService;
-	
 	private String secret = JwtSigningInfo.getSecret();
 	
-	public JDOJwtRealm() {
+  @Inject
+	public JDOJwtRealm(UserService us) {
+    this.userService = us;
 		this.setName(JDOJwtRealm.class.getSimpleName());
 		this.setAuthenticationTokenClass(JWTAuthToken.class);
 		this.setCredentialsMatcher(new CredentialsMatcher() {

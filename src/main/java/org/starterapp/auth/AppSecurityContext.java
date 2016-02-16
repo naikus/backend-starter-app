@@ -4,7 +4,8 @@ package org.starterapp.auth;
  * A security context for service layer. This is used to obtain information about the current user
  */
 public class AppSecurityContext {
-  private static final ThreadLocal<AppSecurityContext> scThreadLocal = new ThreadLocal<AppSecurityContext>();
+  private static final ThreadLocal<AppSecurityContext> scThreadLocal = 
+      new ThreadLocal<AppSecurityContext>();
 
   private Object subject;
 

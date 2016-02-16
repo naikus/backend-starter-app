@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @PersistenceCapable(detachable = "true", cacheable = "true")
 @Queries({
   @Query(name = "UserRole.findByName",
-      value = "select from org.starter.usermgmt.UserRole where name == :name")
+      value = "select from org.starterapp.usermgmt.UserRole where name == :name")
 })
 public class UserRole extends Persistable {
   @Persistent(nullValue = NullValue.EXCEPTION)
