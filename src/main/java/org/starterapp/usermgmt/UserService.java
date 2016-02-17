@@ -9,8 +9,6 @@ import javax.inject.Singleton;
 import org.starterapp.auth.PasswordEncoder;
 import org.starterapp.persistence.PersistenceService;
 import org.starterapp.services.ServiceException;
-import org.starterapp.usermgmt.User;
-import org.starterapp.usermgmt.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
