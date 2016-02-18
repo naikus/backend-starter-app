@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.starterapp.api.ApiResponse;
 import org.starterapp.api.UserAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,55 +27,41 @@ public class AuthResource extends UserAware {
 	private static final Logger LOG = LoggerFactory.getLogger(AuthResource.class.getSimpleName());
 	
 	private final AuthenticationService authService;
+  private JwtSigningInfo signingInfo;
 
   @Inject
   public AuthResource(AuthenticationService authService, UserService uService) {
     super(uService);
     this.authService = authService;
+    this.signingInfo = JwtSigningInfo.load(JwtSigningInfo.DEFAULT_RESOURCE);
   }
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createToken(Auth auth) {
+	public Response authenticate(Auth auth) {
     if(auth == null) {
       return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 		String username = auth.username, password = auth.password;
 		if(authService.authenticate(username, password)) {
 			JsonWebToken token = new JsonWebToken.Builder()
-					.issuer(JwtSigningInfo.getIssuer())
+					.issuer(signingInfo.getIssuer())
 					.subject(username)
 					.jwtId(UUID.randomUUID().toString())
-					.audience(JwtSigningInfo.getAudience())
-					.sign(JwtSigningInfo.getSecret());
+					.audience(signingInfo.getAudience())
+					.sign(signingInfo.getSecret());
 			return Response.ok(new Auth(username, null, token.getRawToken())).build();
 		}else {
-			return Response.status(Response.Status.UNAUTHORIZED)
-					.entity(new ApiResponse("Invalid username or password", 0, true)).build();
+			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 	}
   
-  /*
-  @POST
-  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response createToken(@FormParam("username") String userName, 
-			@FormParam("password") String password) {
-		return createToken(new Auth(userName, password, null));
-	}
-  */
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.TEXT_PLAIN)
 	public Response createTextToken(@FormParam("username") String userName, 
 			@FormParam("password") String password) {
-		Response tokenRes = createToken(new Auth(userName, password, null));
-    Object entity = tokenRes.getEntity();
-    if(entity instanceof ApiResponse) {
-      return Response.status(Response.Status.UNAUTHORIZED)
-          .entity(((ApiResponse) entity).message).build();
-    }else {
-      return Response.ok(((Auth) entity).token).build();
-    }
+		return authenticate(new Auth(userName, password, null));
 	}
 }

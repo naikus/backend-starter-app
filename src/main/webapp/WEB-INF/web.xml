@@ -9,10 +9,12 @@
   <listener>
     <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
   </listener>
+  
   <context-param>
     <param-name>resteasy.servlet.mapping.prefix</param-name>
     <param-value>/api</param-value>
   </context-param>
+  
   <servlet>
     <servlet-name>RESTEasy</servlet-name>
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -21,6 +23,7 @@
     <servlet-name>RESTEasy</servlet-name>
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
+  
   <filter>
     <filter-name>CORSFilter</filter-name>
     <filter-class>org.starterapp.web.CORSFilter</filter-class>
@@ -44,7 +47,13 @@
   <filter-mapping>
     <filter-name>CORSFilter</filter-name>
     <url-pattern>/*</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+    <dispatcher>ERROR</dispatcher>
   </filter-mapping>
+  
   <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
   <filter>
     <filter-name>apiShiroFilter</filter-name>
@@ -53,16 +62,27 @@
       <param-name>targetFilterLifecycle</param-name>
       <param-value>true</param-value>
     </init-param>
-    <async-supported>true</async-supported>
+    <!-- async-supported>true</async-supported -->
   </filter>
   <filter-mapping>
     <filter-name>apiShiroFilter</filter-name>
     <url-pattern>/api/*</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+    <dispatcher>ERROR</dispatcher>
   </filter-mapping>
   <filter-mapping>
     <filter-name>apiShiroFilter</filter-name>
     <url-pattern>/notifications</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+    <dispatcher>ERROR</dispatcher>
   </filter-mapping>
+  
   <filter>
     <filter-name>authShiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -70,10 +90,15 @@
       <param-name>targetFilterLifecycle</param-name>
       <param-value>true</param-value>
     </init-param>
-    <async-supported>true</async-supported>
+    <!-- async-supported>true</async-supported -->
   </filter>
   <filter-mapping>
     <filter-name>authShiroFilter</filter-name>
     <url-pattern>/api/authentication</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+    <dispatcher>ERROR</dispatcher>
   </filter-mapping>
 </web-app>

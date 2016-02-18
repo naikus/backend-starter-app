@@ -1,7 +1,6 @@
 package org.starterapp.api;
 
 import org.starterapp.usermgmt.UserService;
-import javax.inject.Inject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 import org.starterapp.usermgmt.User;

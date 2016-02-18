@@ -8,30 +8,33 @@ import org.slf4j.LoggerFactory;
 
 public final class JwtSigningInfo {
   private static final Logger LOG = LoggerFactory.getLogger(JwtSigningInfo.class.getSimpleName());
-  private static final Properties PROPS = new Properties();
+  public static final String DEFAULT_RESOURCE = "jwt.properties";
+  private final Properties jwtProps;
   
-  static {
-    loadInfo();
+  public JwtSigningInfo(Properties props) {
+    this.jwtProps = props;
   }
   
-  private static void loadInfo() {
+  public String getSecret() {
+    return jwtProps.getProperty("app.jwt.secret");
+  }
+  
+  public String getIssuer() {
+    return jwtProps.getProperty("app.jwt.issuer");
+  }
+  
+  public String getAudience() {
+    return jwtProps.getProperty("app.jwt.audience");
+  }
+  
+  public static JwtSigningInfo load(String classpathResource) {
+    Properties props = new Properties();
     try(InputStream in = Thread.currentThread().getContextClassLoader()
-        .getResourceAsStream("jwt.properties")) {
-      PROPS.load(in);
+        .getResourceAsStream(classpathResource)) {
+      props.load(in);
     }catch(Exception ioe) {
-      LOG.error("Error loading jwt signing properties");
+      LOG.error("Error loading jwt signing properties", ioe);
     }
-  }
-  
-  public static String getSecret() {
-    return PROPS.getProperty("app.jwt.secret");
-  }
-  
-  public static String getIssuer() {
-    return PROPS.getProperty("app.jwt.issuer");
-  }
-  
-  public static String getAudience() {
-    return PROPS.getProperty("app.jwt.audience");
+    return new JwtSigningInfo(props);
   }
 }

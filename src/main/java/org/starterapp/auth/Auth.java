@@ -16,4 +16,9 @@ public class Auth {
 		this.password = password;
 		this.token = token;
 	}
+  
+  @Override
+  public String toString() {
+    return this.token == null ? "" : this.token;
+  }
 }

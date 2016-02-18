@@ -41,13 +41,14 @@ public class JWTTokenAuthcFilter extends AuthenticatingFilter {
 			Object mappedValue) {
 		try {
 			AuthenticationToken token = createToken(request, response);
+      LOG.info("Authentication token is {}", token);
 			if(token.getPrincipal() != null) {
 				Subject sub = getSubject(request, response);
 				sub.login(token);
 				return true;
 			}
 			return false;
-		} catch (Exception ex) {
+		}catch(Exception ex) {
 			LOG.error(ex.getMessage(), ex);
 			return false;
 		}
@@ -64,7 +65,7 @@ public class JWTTokenAuthcFilter extends AuthenticatingFilter {
 		httpRes.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		String header = AUTHORIZATION_SCHEME + " realm=\"API\"";
 		httpRes.setHeader(AUTHENTICATE_HEADER, header);
-		LOG.debug("Sending challenge {}", header);
+		LOG.info("Sending challenge {}", header);
 	}
 	
 	private AuthenticationToken createToken(String authorization) {
@@ -76,12 +77,12 @@ public class JWTTokenAuthcFilter extends AuthenticatingFilter {
 			token = schemeAndToken[0];
 		}
     JsonWebToken jwt = new JsonWebToken(token);
-		LOG.debug("Created jwt from auth header {}", jwt.getRawToken());
+		LOG.info("Created jwt from auth header {}", jwt.getRawToken());
 		return new JWTAuthToken(jwt);
 	}
 	
 	private AuthenticationToken createEmptyToken() {
-		LOG.debug("Created empty token");
+		LOG.info("Created empty token");
 		return new JWTAuthToken(null);
 	}
 	

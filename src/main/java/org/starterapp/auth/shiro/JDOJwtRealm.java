@@ -29,14 +29,18 @@ public class JDOJwtRealm extends AuthorizingRealm {
 	private static final Logger LOG = LoggerFactory.getLogger(JDOJwtRealm.class.getSimpleName());
 	
 	private UserService userService;
-	private String secret = JwtSigningInfo.getSecret();
+	// private String secret = JwtSigningInfo.getSecret();
+  private JwtSigningInfo signingInfo;
 	
   @Inject
 	public JDOJwtRealm(UserService us) {
     this.userService = us;
 		this.setName(JDOJwtRealm.class.getSimpleName());
 		this.setAuthenticationTokenClass(JWTAuthToken.class);
+    this.signingInfo = JwtSigningInfo.load(JwtSigningInfo.DEFAULT_RESOURCE);
 		this.setCredentialsMatcher(new CredentialsMatcher() {
+      String secret = signingInfo.getSecret();
+      
 			@Override
 			public boolean doCredentialsMatch(AuthenticationToken at, AuthenticationInfo ai) {
 				if(ai == null) {
@@ -83,18 +87,19 @@ public class JDOJwtRealm extends AuthorizingRealm {
 		if(user != null) {
 			SimpleAuthorizationInfo authzInfo = new SimpleAuthorizationInfo();
       UserRole userRole = user.getRole();
-			LOG.info("User Authz Role {}", userRole);
-			if (userRole != null) {
-				LOG.info("Permissions for role {}: {}", userRole, userRole.getPermissions());
-				for (String permission : userRole.getPermissions()) {
-					authzInfo.addStringPermission(permission);
-				}
+			LOG.debug("User Authz Role {}", userRole);
+			if(userRole != null) {
+				LOG.debug("Permissions for role {}: {}", userRole, userRole.getPermissions());
+        // DO NOT USE stream() api! I messes up with JDO objects!
+        userRole.getPermissions().forEach((permission) -> {
+          authzInfo.addStringPermission(permission);
+        });
 				authzInfo.addRole(userRole.getName());
-			} else {
+			}else {
 				LOG.info("User {} has no role associated", user.getEmail());
 			}
 			return authzInfo;
-		} else {
+		}else {
 			return null;
 		}
 	}

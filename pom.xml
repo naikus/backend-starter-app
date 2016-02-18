@@ -244,7 +244,7 @@
       <version>${bval-jsr303.version}</version>
       <scope>runtime</scope>
     </dependency>
-
+    
 
     <!-- DI Container dependencies -->
     <dependency>
