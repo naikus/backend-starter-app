@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public final class JwtSigningInfo {
   private static final Logger LOG = LoggerFactory.getLogger(JwtSigningInfo.class.getSimpleName());
-  private static final Properties props = new Properties();
+  private static final Properties PROPS = new Properties();
   
   static {
     loadInfo();
@@ -17,21 +17,21 @@ public final class JwtSigningInfo {
   private static void loadInfo() {
     try(InputStream in = Thread.currentThread().getContextClassLoader()
         .getResourceAsStream("jwt.properties")) {
-      props.load(in);
+      PROPS.load(in);
     }catch(Exception ioe) {
       LOG.error("Error loading jwt signing properties");
     }
   }
   
   public static String getSecret() {
-    return props.getProperty("app.jwt.secret");
+    return PROPS.getProperty("app.jwt.secret");
   }
   
   public static String getIssuer() {
-    return props.getProperty("app.jwt.issuer");
+    return PROPS.getProperty("app.jwt.issuer");
   }
   
   public static String getAudience() {
-    return props.getProperty("app.jwt.audience");
+    return PROPS.getProperty("app.jwt.audience");
   }
 }

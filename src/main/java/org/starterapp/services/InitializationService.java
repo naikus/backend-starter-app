@@ -23,13 +23,12 @@ public class InitializationService {
     private static final Logger LOG = LoggerFactory.getLogger(
 			 InitializationService.class.getSimpleName());
     
-    @Inject
-    private UserService userService;
-    
-    private Configuration appConfig;
+    private final UserService userService;    
+    private final Configuration appConfig;
     
     @Inject
-    public InitializationService(ConfigProvider provider) {
+    public InitializationService(ConfigProvider provider, UserService uService) {
+      this.userService = uService;
       appConfig = provider.get();
       LOG.info("Loaded configuration\n{}", appConfig);
     }
@@ -51,7 +50,7 @@ public class InitializationService {
             
             UserRole appUserRole = new UserRole("appuser", "A normal app user");
             appUserRole.addPermission("users:read")
-                    .addPermission("users:update");
+                .addPermission("users:update");
             appUserRole = userService.addRole(appUserRole);            
             
             LOG.info("Created Roles {} and {}", suRole.getName(), appUserRole.getName());

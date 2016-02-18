@@ -5,9 +5,9 @@ package org.starterapp.auth;
  */
 public class AppSecurityContext {
   private static final ThreadLocal<AppSecurityContext> scThreadLocal = 
-      new ThreadLocal<AppSecurityContext>();
+      new ThreadLocal<>();
 
-  private Object subject;
+  private final Object subject;
 
   public AppSecurityContext(Object subject) {
     this.subject = subject;

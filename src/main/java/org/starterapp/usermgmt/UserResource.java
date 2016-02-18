@@ -1,6 +1,7 @@
 package org.starterapp.usermgmt;
 
 import java.util.List;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
@@ -12,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import org.starterapp.api.BaseResource;
+import org.starterapp.api.UserAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +28,13 @@ import org.slf4j.LoggerFactory;
 @Named
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
-public class UserResource extends BaseResource {
+public class UserResource extends UserAware {
   private static final Logger LOG = LoggerFactory.getLogger(UserResource.class.getSimpleName());
+  
+  @Inject
+  public UserResource(UserService uService) {
+    super(uService);
+  }
 
   @GET
   public List<User> getUsers() {

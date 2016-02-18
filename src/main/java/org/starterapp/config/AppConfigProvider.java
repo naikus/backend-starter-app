@@ -20,10 +20,6 @@ public class AppConfigProvider extends ConfigProvider {
   
   private Configuration configuration;
   
-  public AppConfigProvider() {
-  
-  }
-
   @Override
   public Configuration get() {
     if(configuration == null) {

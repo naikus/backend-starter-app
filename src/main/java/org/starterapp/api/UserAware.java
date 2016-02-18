@@ -13,14 +13,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author aniket
  */
-public abstract class BaseResource {
-  private static Logger LOG = LoggerFactory.getLogger(BaseResource.class.getSimpleName());
+public abstract class UserAware {
+  private static Logger LOG = LoggerFactory.getLogger(UserAware.class.getSimpleName());
 
   @Context
   protected SecurityContext securityContext;
 
-  @Inject
   protected UserService userService;
+  
+  public UserAware(UserService uService) {
+    this.userService = uService;
+  }
 
   protected User currentUser() {
     long userId = Long.valueOf(securityContext.getUserPrincipal().getName());

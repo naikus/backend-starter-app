@@ -7,5 +7,6 @@ import javax.inject.Provider;
  * @author aniket
  */
 public abstract class ConfigProvider implements Provider<Configuration> {
+  @Override
   public abstract Configuration get();
 }

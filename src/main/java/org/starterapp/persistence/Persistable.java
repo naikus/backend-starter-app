@@ -12,6 +12,10 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Inheritance(customStrategy = "complete-table")
 public abstract class Persistable implements Serializable {
+  public Persistable() {
+    this.createdOn = new Date();
+  }
+  
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private long id;

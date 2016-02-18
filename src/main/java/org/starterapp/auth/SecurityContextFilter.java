@@ -20,7 +20,8 @@ import org.slf4j.LoggerFactory;
 @Named
 @Provider
 public class SecurityContextFilter implements ContainerRequestFilter, ContainerResponseFilter {
-	 private static final Logger LOG = LoggerFactory.getLogger(SecurityContextFilter.class.getSimpleName());
+	 private static final Logger LOG = LoggerFactory.getLogger(
+       SecurityContextFilter.class.getSimpleName());
 	 
     @Context SecurityContext secContext;
 

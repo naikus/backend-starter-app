@@ -12,9 +12,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.starterapp.api.ApiResponse;
-import org.starterapp.api.BaseResource;
+import org.starterapp.api.UserAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.starterapp.usermgmt.UserService;
 
 /**
  * A resource for obtaining authentication information
@@ -23,13 +24,14 @@ import org.slf4j.LoggerFactory;
 @Singleton
 @Path("/authentication")
 @Produces(MediaType.APPLICATION_JSON)
-public class AuthResource extends BaseResource {
+public class AuthResource extends UserAware {
 	private static final Logger LOG = LoggerFactory.getLogger(AuthResource.class.getSimpleName());
 	
-	AuthenticationService authService;
+	private final AuthenticationService authService;
 
   @Inject
-  public AuthResource(AuthenticationService authService) {
+  public AuthResource(AuthenticationService authService, UserService uService) {
+    super(uService);
     this.authService = authService;
   }
 	

@@ -20,15 +20,13 @@ import org.slf4j.LoggerFactory;
 public class UserService {
   private static final Logger LOG = LoggerFactory.getLogger(UserService.class.getSimpleName());
 
-  private PersistenceService persistence;
+  private final PersistenceService persistence;
+  private final PasswordEncoder passwordEncoder;
 
   @Inject
-  private PasswordEncoder passwordEncoder;
-
-  @Inject
-  @Named("AppPMF")
-  public UserService(PMFProvider provider) {
+  public UserService(@Named("AppPMF") PMFProvider provider, PasswordEncoder encoder) {
     persistence = new PersistenceService(provider);
+    passwordEncoder = encoder;
   }
 
   public List<User> getAllUsers() {

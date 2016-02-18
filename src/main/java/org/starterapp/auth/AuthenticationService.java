@@ -1,6 +1,5 @@
 package org.starterapp.auth;
 
-import org.starterapp.auth.PasswordEncoder;
 import org.starterapp.usermgmt.UserService;
 import java.io.UnsupportedEncodingException;
 import javax.inject.Inject;
@@ -9,27 +8,28 @@ import javax.inject.Singleton;
 import org.starterapp.services.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.starterapp.usermgmt.User;
 
-/**
- * Authentication service 
- */
 @Named
 @Singleton
 public class AuthenticationService {
-  private static final Logger LOG = LoggerFactory.getLogger(AuthenticationService.class.getSimpleName());
+  private static final Logger LOG = LoggerFactory.getLogger(
+      AuthenticationService.class.getSimpleName());
   
-	@Inject
-	private UserService userService;
-	
-	@Inject
-	private PasswordEncoder passwordEncoder;
+	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
+  
+  @Inject
+  public AuthenticationService(UserService uService, PasswordEncoder encoder) {
+    this.userService = uService;
+    this.passwordEncoder = encoder;
+  }
 	
 	public boolean authenticate(String username, String password) {
-    LOG.info("Username and password {}, {}", username, password);
 		if(username == null) {
 			return false;
 		}
-		  org.starterapp.usermgmt.User user = userService.getUserByEmail(username);
+    User user = userService.getUserByEmail(username);
 		if(user == null) {
 			return false;
 		}
