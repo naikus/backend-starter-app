@@ -35,7 +35,7 @@ public class UserResource extends UserAware {
   public UserResource(UserService uService) {
     super(uService);
   }
-
+  
   @GET
   public List<User> getUsers() {
     User user = currentUser(); //retrieve the curently requesting accont

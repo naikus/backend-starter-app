@@ -1,5 +1,6 @@
 package org.starterapp.api;
 
+import java.security.Principal;
 import org.starterapp.usermgmt.UserService;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
@@ -25,7 +26,13 @@ public abstract class UserAware {
   }
 
   protected User currentUser() {
-    long userId = Long.valueOf(securityContext.getUserPrincipal().getName());
+    Principal p = securityContext.getUserPrincipal();
+    String id = p.getName();
+    if(id == null) {
+      throw new RuntimeException("No current user");
+      // return null;
+    }
+    long userId = Long.valueOf(id);
     return userService.getUser(userId);
   }
 }

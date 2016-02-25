@@ -9,7 +9,7 @@ public class AppSecurityContext {
 
   private final Object subject;
 
-  public AppSecurityContext(Object subject) {
+  private AppSecurityContext(Object subject) {
     this.subject = subject;
   }
 
@@ -23,8 +23,9 @@ public class AppSecurityContext {
     return ctx;
   }
 
-  public static AppSecurityContext get() {
-    return scThreadLocal.get();
+  public static Object currentSubject() {
+    AppSecurityContext ctx = scThreadLocal.get();
+    return ctx == null ? null : ctx.getSubject();
   }
 
   public static void remove() {

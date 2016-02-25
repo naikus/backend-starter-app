@@ -9,7 +9,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import org.starterapp.persistence.Persistable;
 import java.util.concurrent.Callable;
 import javax.jdo.FetchPlan;
 import org.starterapp.services.ServiceException;
